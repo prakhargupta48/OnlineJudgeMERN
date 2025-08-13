@@ -1,13 +1,11 @@
-# Online Judge Setup Instructions (Firebase-Free Version)
+# Online Judge Setup Instructions
 
-## Overview
-This application has been converted from Firebase to MongoDB Atlas for storing problems and solutions. All test cases and expected outputs are now stored directly in MongoDB.
 
 ## Environment Setup
 
 ### Backend (.env file in backend directory)
 ```env
-MONGODB_URL=mongodb+srv://your_username:your_password@your_cluster.mongodb.net/onlinejudge
+MONGODB_URI= your MONGODB URL
 SECRET_KEY=your_jwt_secret_key_here
 ```
 
@@ -47,20 +45,6 @@ VITE_API_BASE_URL=http://localhost:5000
    npm run dev
    ```
 
-## Key Changes Made
-
-### Backend Changes
-- Removed Firebase Admin SDK dependencies
-- Updated Problems model to store testCases and expectedOutput directly
-- Modified submit endpoint to read from MongoDB instead of Firebase
-- Updated problem creation to store file contents in MongoDB
-
-### Frontend Changes
-- Removed Firebase SDK dependencies
-- Updated Upload component to read file contents instead of uploading to Firebase
-- Modified Contribute component to send file contents to backend
-- Updated ProblemDetails to work without Firebase links
-
 ## Database Schema
 
 ### Problems Collection
@@ -91,6 +75,5 @@ VITE_API_BASE_URL=http://localhost:5000
 ## Benefits of This Approach
 - No external file storage dependencies
 - Faster access to test cases (no network calls)
-- Simpler deployment (no Firebase setup required)
 - All data in one place (MongoDB)
 - Easier backup and migration
