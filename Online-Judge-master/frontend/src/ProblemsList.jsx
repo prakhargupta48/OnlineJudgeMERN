@@ -285,8 +285,8 @@ const ProblemsList = () => {
               <label>
                 <input
                   type="checkbox"
-                  checked={selectedTag === "tree"}
-                  onChange={() => handleTagClick("tree")}
+                  checked={selectedTag === "Tree"}
+                  onChange={() => handleTagClick("Tree")}
                 />
                 TREE
               </label>

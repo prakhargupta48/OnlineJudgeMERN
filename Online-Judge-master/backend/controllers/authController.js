@@ -13,8 +13,6 @@ module.exports.signup_get = (req, res) => {
 dotenv.config();
 
 // handling errors
-
-
 const handleError = (err) => {
     console.log(err.message, err.code);
     let errors = { firstname: '', lastname: '', email: '', password: '' };
@@ -32,12 +30,6 @@ const handleError = (err) => {
 
         });
     }
-
-    // // incorrect email while login
-    // if(){
-
-    // }
-
 
     return errors;
 }
@@ -71,7 +63,6 @@ module.exports.problems = async (req, res) => {
         console.log(user.hardP);
 
         const all_problems = await Problems.find();
-        //console.log(all_problems);
         //all_problems is an array in which each problem is an object
         res.status(200).json({all_problems:all_problems ,"easySolved" :user.easyP , "basicSolved" :user.basicP  ,"mediumSolved":user.mediumP ,"hardSolved":user.hardP , "user_id":decodedToken.id});
     } catch (error) {
@@ -117,7 +108,7 @@ module.exports.signup_post = async (req, res) => {
         const token = createToken(user._id, user.role);
 
         // place token inside cookie and send to client as response
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 ,sameSite:'None', secure: true });//cookie expoects in milliseconds
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 ,sameSite:'None', secure: true });//cookie expects in milliseconds
         console.log("Account created successfully");
         res.status(201).json({ user: user._id, role: role }); //in above line created account in db , now sending back to frontend  
     }
@@ -126,13 +117,6 @@ module.exports.signup_post = async (req, res) => {
         res.status(400).json({ errors });
     }
 }
-
-
-// const enteredPassword =bcrypt.compare(password, user.password)
-// // res === true
-// if(!enteredPassword){
-// return res.status(400).send("Password doesnot match");
-// }
 
 
 module.exports.login_post = async (req, res) => {
