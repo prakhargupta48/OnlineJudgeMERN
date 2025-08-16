@@ -9,6 +9,8 @@ import ProblemsList from './ProblemsList';
 import Contribute from './Contribute';
 import ProblemDetails from './ProblemDetails';
 import Myaccount from './Myaccount';
+import AIReviewPage from './AIReviewPage';
+import EditProblem from './EditProblem';
 
 
 function App() {
@@ -27,6 +29,12 @@ function App() {
 
         {/* getting particular problem */}
         <Route path="/problems/:id" element={<ProblemDetails/>} />
+        
+        {/* Admin routes */}
+        <Route path="/admin/problems/:id/edit" element={<EditProblem/>} />
+        
+        {/* AI Review page */}
+        <Route path="/ai-review" element={<AIReviewPage/>} />
         
       </Routes>
     </Router>

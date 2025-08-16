@@ -383,3 +383,110 @@ module.exports.my_account =async (req , res)=>{
             
         }
 }
+
+// Update problem - Admin only
+module.exports.updateProblem = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name, description, difficulty, tags, hints, showtc, showoutput, constraints, testCases, expectedOutput } = req.body;
+
+        let errors = { name: '', description: '', difficulty: '', testCases: '', expectedOutput: '', showtc: '', showoutput: '', constraints };
+
+        if (!name) {
+            errors.name = 'Enter Problem name';
+            return res.status(400).json({ errors });
+        }
+        if (!description) {
+            errors.description = 'Enter Problem description';
+            return res.status(400).json({ errors });
+        }
+        if (!difficulty) {
+            errors.difficulty = 'Enter the difficulty level';
+            return res.status(400).json({ errors });
+        }
+        if (!testCases) {
+            errors.testCases = "Test cases are required";
+            return res.status(400).json({ errors });
+        }
+        if (!expectedOutput) {
+            errors.expectedOutput = "Expected output is required";
+            return res.status(400).json({ errors });
+        }
+        if (!showtc) {
+            errors.showtc = "Sample test cases are required for user";
+            return res.status(400).json({ errors });
+        }
+        if (!showoutput) {
+            errors.showoutput = "Sample output is required for user";
+            return res.status(400).json({ errors });
+        }
+        if (!constraints) {
+            errors.constraints = "Constraints are required";
+            return res.status(400).json({ errors });
+        }
+
+        const updatedProblem = await Problems.findByIdAndUpdate(
+            id,
+            { 
+                name, 
+                tags, 
+                description, 
+                difficulty, 
+                hints, 
+                testCases, 
+                expectedOutput, 
+                showtc, 
+                showoutput, 
+                constraints,
+                updatedAt: Date.now()
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedProblem) {
+            return res.status(404).json({ error: 'Problem not found' });
+        }
+
+        console.log("Problem updated successfully", updatedProblem);
+        res.status(200).json({ message: 'Problem updated successfully', problem: updatedProblem });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// Delete problem - Admin only
+module.exports.deleteProblem = async (req, res) => {
+    try {
+        const { id } = req.params;
+        
+        const deletedProblem = await Problems.findByIdAndDelete(id);
+        
+        if (!deletedProblem) {
+            return res.status(404).json({ error: 'Problem not found' });
+        }
+
+        console.log("Problem deleted successfully", deletedProblem);
+        res.status(200).json({ message: 'Problem deleted successfully', problem: deletedProblem });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+// Get problem for editing - Admin only
+module.exports.getProblemForEdit = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const problem = await Problems.findById(id);
+        
+        if (!problem) {
+            return res.status(404).json({ error: 'Problem not found' });
+        }
+
+        res.status(200).json({ problem });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};

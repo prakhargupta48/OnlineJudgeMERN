@@ -429,7 +429,8 @@ a {
 
 .run-button,
 .run-tc-button,
-.submit-button {
+.submit-button,
+.ai-review {
   background-color: #17a2b8;
   color: #fff;
   border: none;
@@ -448,6 +449,16 @@ a {
 .run-button:hover,
 .submit-button:hover {
   background-color: #138496;
+}
+
+.ai-review:hover:not(.disabled) {
+  background-color: #138496;
+}
+
+.ai-review.disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .run-button {

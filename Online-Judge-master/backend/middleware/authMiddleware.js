@@ -1,6 +1,6 @@
 const jwt =require("jsonwebtoken")
 const dotenv = require("dotenv");
-
+const User = require('../models/User');
 
 dotenv.config();
 
@@ -28,4 +28,31 @@ const requireAuth = function(req , res , next){
     }
 }
 
-module.exports={requireAuth};
+const requireAdmin = async function(req, res, next) {
+    const token = req.cookies.jwt;
+    
+    if (!token) {
+        return res.status(401).json({ error: 'Authentication required' });
+    }
+    
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+        const user = await User.findById(decodedToken.id);
+        
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        if (user.role !== 'admin') {
+            return res.status(403).json({ error: 'Admin access required' });
+        }
+        
+        req.user = user;
+        next();
+    } catch (error) {
+        console.log(error.message);
+        return res.status(401).json({ error: 'Invalid token' });
+    }
+}
+
+module.exports={requireAuth, requireAdmin};

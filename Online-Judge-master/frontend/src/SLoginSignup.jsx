@@ -122,7 +122,7 @@ function SLoginSignup() {
           <input className='sub-btn' type="submit" value="Submit" />
         </div>
       </form>
-      <div className='new_user' onClick={navigate_to_signup} >New to <span className='new_user_hai_kya'  > Crack the Code ?  </span> <span className='go_to_signup'>Signup</span> </div>
+              <div className='new_user' onClick={navigate_to_signup} >New to <span className='new_user_hai_kya'  > Judge My Code ?  </span> <span className='go_to_signup'>Signup</span> </div>
     </div>
     </>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import "./ProblemDetails.css";
 import Editor from "@monaco-editor/react";
 import HintsTab from "../smallCompo/HintsTab.jsx";
@@ -19,6 +20,7 @@ function ProblemDetails() {
   const [selectedLanguage, setSelectedLanguage] = useState("cpp");
   const [showCodingScreen, setShowCodingScreen] = useState(true);
   const [output, setOutput] = useState("");
+  const [aiReview, setAiReview] = useState("");
   const [verdict, setVerdict] = useState("");
   const [input, setInput] = useState("");
   const [activeTab, setActiveTab] = useState("input");
@@ -30,9 +32,11 @@ function ProblemDetails() {
   const [passed, setPassed] = useState(0);
   const [beforeSolved ,SetbeforeSolved] = useState(false);
   const [tcPassed, setTCPassed] = useState(0);
+  const [isAiReviewDisabled, setIsAiReviewDisabled] = useState(true);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
   // const [firstFailed, setFirstFailed] = useSbar_gtate(-1); // Renamed to camelCase
   const sampleCodes = {
-    cpp: `#include <iostream>\nusing namespace std;\n\nint main(){\n  //Welcome to Crack the Code!  \n\n   return 0;  \n}; `,
+    cpp: `#include <iostream>\nusing namespace std;\n\nint main(){\n  //Welcome to Judge My Code!  \n\n   return 0;  \n}; `,
     py: `print("Hello, World!")`,
     java: `// Read number of test cases\nint T = scanner.nextInt();\nwhile (T-- > 0) {\n    // Read input for each test case\n    int N = scanner.nextInt();\n    \n    // Your solution here\n    System.out.println("Hello, World!");\n}`,
   };
@@ -113,6 +117,10 @@ function ProblemDetails() {
       );
 
       setTCPassed(response.data.results.length);
+      // Enable AI Review button after submission
+      setHasSubmitted(true);
+      setIsAiReviewDisabled(false);
+      
       // If all the testcases are passed , ie expected output and hardcoded are same;
       if (response.data.success && !response.data.alreadySolved) {
         console.log("All test cases passed!");
@@ -219,6 +227,25 @@ function ProblemDetails() {
     }
   }
 
+  const handleAiReview = async () => {
+    // Disable button for 4 seconds
+    setIsAiReviewDisabled(true);
+    
+    // Navigate to AI Review page with code data
+    navigate('/ai-review', {
+      state: {
+        code: code,
+        language: selectedLanguage,
+        problemId: id
+      }
+    });
+    
+    // Re-enable button after 4 seconds
+    setTimeout(() => {
+      setIsAiReviewDisabled(false);
+    }, 4000);
+  }
+
   const toggleTab = (tabName) => {
     setActiveTab(tabName);
   };
@@ -248,7 +275,7 @@ function ProblemDetails() {
             <header className="header">
               <h1 className="logo">
                 <a href="#" onClick={goHome}>
-                  Crack the Code
+                  Judge My Code
                 </a>
               </h1>
               <ul className="main-nav">
@@ -373,7 +400,7 @@ function ProblemDetails() {
               </div>
 
               <Editor
-                height="75%"
+                height="70%"
                 language={selectedLanguage}
                 theme={theme}
                 value={code}
@@ -467,6 +494,14 @@ function ProblemDetails() {
                 </button>
                 <button className="submit-button" onClick={Code_Submit}>
                   Submit
+                </button>
+                <button 
+                  className={`ai-review ${isAiReviewDisabled ? 'disabled' : ''}`}
+                  onClick={handleAiReview}
+                  disabled={isAiReviewDisabled}
+                  title={isAiReviewDisabled ? "Submit your code first to enable AI Review" : "Get AI-powered code review"}
+                >
+                  AI Review
                 </button>
               </div>
             </div>

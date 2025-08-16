@@ -72,7 +72,7 @@ function Myaccount() {
   return (
     <div>
       <div className="account_navbar">
-        <div className="account_logo">CRACK THE CODE</div>
+        <div className="account_logo">JUDGE MY CODE</div>
         <div className="account_home" onClick={returnToHome}>
           HOME
         </div>

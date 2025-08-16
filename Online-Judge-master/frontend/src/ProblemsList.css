@@ -355,3 +355,38 @@
     color: #484848;
   }
   
+/* Admin create problem button */
+.admin-create-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+.create-problem-btn {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.create-problem-btn:hover {
+  background-color: #1976D2;
+}
+
+/* Admin indicator in header */
+.admin-indicator {
+  background-color: #ff9800;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+  

@@ -1,5 +1,6 @@
 import React from 'react'
 import gifImage from './assets/coder.gif'
+import gifImage2 from './assets/Adobe Express - CodingGuy1.gif'
 import './coder.css'
 import {Link} from 'react-router-dom'
 import swal from 'sweetalert';
@@ -16,8 +17,8 @@ function Intro_Website() {
   }
   return (
     <div >
-      <p className='website_name'>Crack the <span>Code!</span></p>
-      <p className='oneliner' >Enhance your problem-solving skills with Crack the Code: A platform where challenges ignite your coding journey.</p>
+      <p className='website_name'>Judge My <span>Code!</span></p>
+              <p className='oneliner' >Enhance your problem-solving skills with Judge My Code: A platform where challenges ignite your coding journey.</p>
       <p></p>
       <div className="coder-image" >
         <div className="entry" >
@@ -26,7 +27,7 @@ function Intro_Website() {
             <div className="description">
 
               <br />
-              <h1>Welcome to <span> Crack the code</span> , where coding challenges transform into solutions! Whether you're a seasoned developer honing your skills or a beginner taking your first steps into the world of coding, we have something for everyone.</h1>
+              <h1>Welcome to <span> Judge My Code</span> , where coding challenges transform into solutions! Whether you're a seasoned developer honing your skills or a beginner taking your first steps into the world of coding, we have something for everyone.</h1>
    
               <button className="solverButton">
               <div onClick={go_to_prob_list}>Start Solving</div>
@@ -37,7 +38,21 @@ function Intro_Website() {
 
 
         <div className="entry">
-          <img src={gifImage} alt="GIF" />
+        <img
+  src={gifImage2}
+  alt="GIF"
+  style={{
+    width: "500px",   // control width
+    height: "400px",   // keep aspect ratio
+    borderRadius: "16px", // optional rounded corners
+    marginTop: "30px"
+  }}
+/>
+
+          {/* <video src={gifImage2} autoPlay loop muted playsInline>
+  Your browser does not support the video tag.
+</video> */}
+
         </div>
     
       </div>

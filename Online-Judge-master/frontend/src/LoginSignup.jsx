@@ -118,7 +118,7 @@ function LoginSignup() {
           <input className='sub-btn' type="submit" value="Submit" />
         </div>
       </form>
-      <div className='old_user' onClick={navigate_to_login} >New to <span className='old_user_hai_kya'  > Crack the Code ?  </span> <span className='go_to_login'> Login</span> </div>
+              <div className='old_user' onClick={navigate_to_login} >New to <span className='old_user_hai_kya'  > Judge My Code ?  </span> <span className='go_to_login'> Login</span> </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Contribute.css";
 import axios from "axios";
 import My_image from "./assets/two.png";
@@ -18,8 +18,29 @@ function Contribute() {
   const [showtc, setShowtc] = useState("");
   const [showoutput, setShowoutput] = useState("");
   const [redirect, setRedirect] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
+
+  // Check if user is admin
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/check_if_admin`, {
+          withCredentials: true,
+        });
+        setIsAdmin(response.data.role === 'admin');
+        setLoading(false);
+      } catch (error) {
+        console.error("Error checking admin status:", error);
+        setIsAdmin(false);
+        setLoading(false);
+      }
+    };
+
+    checkAdminStatus();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,6 +82,20 @@ function Contribute() {
   };
 
   if (redirect) return <Navigate to="/" />;
+
+  if (loading) {
+    return <div className="loading">Loading...</div>;
+  }
+
+  if (!isAdmin) {
+    return (
+      <div className="error-container">
+        <h2>Access Denied</h2>
+        <p>You need admin privileges to create problems.</p>
+        <button onClick={() => navigate("/problems")}>Back to Problems</button>
+      </div>
+    );
+  }
 
   return (
     <div className="container">

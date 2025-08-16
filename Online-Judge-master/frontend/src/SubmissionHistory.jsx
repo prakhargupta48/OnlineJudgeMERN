@@ -80,7 +80,7 @@ function SubmissionHistory() {
       <div className="submission_navbar">
         <div className="return_to_home" >
           {/* <botton onClick={returnHome}> CRACK THE CODE</> */}
-          <button type="button" onClick={returnHome}>CRACK THE CODE</button>
+          <button type="button" onClick={returnHome}>JUDGE MY CODE</button>
         </div>
         <div className="account_Section" >
             <img src="https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527_1280.png" alt="Image" />

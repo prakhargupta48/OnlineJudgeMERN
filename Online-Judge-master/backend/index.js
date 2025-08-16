@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const cors = require('cors');
 const authController = require('./controllers/authController');
-const { requireAuth } = require('./middleware/authMiddleware');
+const { requireAuth, requireAdmin } = require('./middleware/authMiddleware');
 const generateFile = require('./CC/generateFile');
 const generateJavaFile = require('./CC/generateJavaFile');
 const executeCpp = require('./CC/executeCpp');
@@ -13,9 +13,10 @@ const executePy = require('./CC/executePy');
 const executeJava = require('./CC/executeJava');
 const generateInputFile = require('./CC/generateInputFile');
 const generateExpectedOutputFile = require('./CC/generateExpectedOutput');
+const generateAiReview = require('./CC/generateAiReview');
 const fs = require('fs');
 const { promisify } = require('util');
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 // const PORT = 8080;
 
 
@@ -81,8 +82,13 @@ app.get('/problems_post', requireAuth, (req, res) => {
 
 
 
-// get partivular problems
+// get particular problems
 app.get('/problems/:id', requireAuth, authController.problem_details);
+
+// Admin routes for problem management
+app.get('/admin/problems/:id/edit', requireAuth, requireAdmin, authController.getProblemForEdit);
+app.put('/admin/problems/:id', requireAuth, requireAdmin, authController.updateProblem);
+app.delete('/admin/problems/:id', requireAuth, requireAdmin, authController.deleteProblem);
 
 
 // sending cookie to the client , that is browser
@@ -606,4 +612,32 @@ app.get("/query/problem/:tag", async (req, res) => {
     console.log("Error in backend:", error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+
+
+app.post("/ai-review", async (req, res) => {
+  const { code } = req.body;
+  
+  //Validat that cod eis provided
+  if (code === undefined || code.trim() === '') {
+    return res.status(400).json({
+      success: false,
+      error: 'Empty code! PLease provide some code to execute'
+    });
+  }
+  
+  try{
+       const aiReview = await generateAiReview(code);
+
+       res.status(200).json({
+         success: true,
+         aiReview
+       });
+    } catch (error) {
+      console.error('Error in AI review:', error.message);
+      res.status(500).json({
+        success: false,
+        error: error.message || error.toString() || 'Error in ai-review endpoint  '
+      })
+    }
 });

@@ -25,6 +25,7 @@ const ProblemsList = () => {
   const [userid, setUserid] = useState(null);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [selectedTag, setSelectedTag] = useState(""); // State to hold selected tag
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const calculateWidth = (solved, total) => {
     return total === 0 ? "0%" : `${(solved / total) * 100}%`;
@@ -117,6 +118,23 @@ const ProblemsList = () => {
     fetchData();
   }, [navigate]);
 
+  // Check if user is admin
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/check_if_admin`, {
+          withCredentials: true,
+        });
+        setIsAdmin(response.data.role === 'admin');
+      } catch (error) {
+        console.error("Error checking admin status:", error);
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdminStatus();
+  }, []);
+
   if (!isAuthenticated) {
     return <div>Redirecting ...</div>;
   }
@@ -158,7 +176,7 @@ const ProblemsList = () => {
         <header className="header header_more">
           <h1 className="logo">
             <a href="#" onClick={moveHome}>
-              Crack the Code
+              Judge My Code
             </a>
           </h1>
           <ul className="main-nav">
@@ -166,6 +184,11 @@ const ProblemsList = () => {
             <li>
               <a onClick={openAccount}>Account</a>
             </li>
+            {isAdmin && (
+              <li>
+                <a className="admin-indicator">Admin</a>
+              </li>
+            )}
             <li>
               <a href="#">Report an issue</a>
             </li>
@@ -181,6 +204,16 @@ const ProblemsList = () => {
               <div className="heading_image">
                 <img src="https://img.freepik.com/free-vector/man-shows-gesture-great-idea_10045-637.jpg?t=st=1718393335~exp=1718396935~hmac=f5906f097b297b7c87fc81b6d8d9cc08127f1ff4d9a12fd9cbf97d4f652afdef&w=1060" alt="" />
               </div>
+              {isAdmin && (
+                <div className="admin-create-section">
+                  <button 
+                    className="create-problem-btn"
+                    onClick={() => navigate("/problems_post")}
+                  >
+                    Create New Problem
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="all_prob_list">
@@ -196,6 +229,7 @@ const ProblemsList = () => {
                       difficulty={problem.difficulty}
                       tags={problem.tags}
                       submissions={"No"}
+                      isAdmin={isAdmin}
                     />
                   ))
                 ) : (

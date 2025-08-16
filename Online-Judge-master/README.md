@@ -1,5 +1,5 @@
 
-# Crack The Code
+# Judge My Code
 > _An online Coding platform_
 
 ### CONTENTS
