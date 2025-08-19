@@ -6,6 +6,8 @@
 [![License](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
 
+DEMO VIDEO LINK - https://www.loom.com/share/1c16c3f042be46d0a8ec603a65664edb?sid=96168d04-ef10-4f2d-bde3-50666e9e5dcb
+
 > A comprehensive online coding platform where developers can practice, solve problems, and get AI-powered code reviews.
 
 ## 📋 Table of Contents
