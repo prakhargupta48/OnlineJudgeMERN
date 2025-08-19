@@ -44,3 +44,5 @@ desktop.ini
 .cache/
 .temp/
 .tmp/
+
+/keys/online-judge.pem

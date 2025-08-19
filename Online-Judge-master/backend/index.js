@@ -39,9 +39,12 @@ app.use(cookieParser()); //we need to use this middleware for cookie
 app.use(
   cors({
     origin: [
-      'https://online-judge-4ypq6yt.vercel.app',
-      'https://online-judge-4ypq6yt-git-master-priyams-projects-c7c3c963.vercel.app',
-      'https://online-judge-4ypq6yt-f1af3yd5t-priyams-projects-c7c3c963.vercel.app',
+      'https://online-judge-mern-git-main-prakhar-guptas-projects-145c6383.vercel.app',
+      'https://online-judge-mern-prakhar-guptas-projects-145c6383.vercel.app/',
+      'https://judgemycode.online',
+      'https://www.judgemycode.online',
+      'https://online-judge-mern.vercel.app',
+      'https://*.vercel.app',
       'http://localhost:5173',
       'http://localhost:5174'
     ], // Allow Vite defaults and existing deployments

@@ -1,0 +1,48 @@
+# Node deps & lock
+node_modules/
+package-lock.json
+
+# Env / secrets
+.env
+.env.* 
+*.env
+
+# Git / docs / dev files
+.git
+.gitignore
+README.md
+CHANGELOG.md
+
+# Docker / compose files (do NOT ignore Dockerfile if it is in this folder)
+docker-compose*
+
+# Tests / coverage
+coverage/
+.nyc_output/
+tests/
+__tests__/
+test/
+*.test.js
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temp
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Logs
+**/*.log
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
